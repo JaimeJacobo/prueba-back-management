@@ -37,6 +37,8 @@ const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.
 
 const app = express();
 
+app.set('trust proxy', 1);
+
 // Middleware Setup
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -61,7 +63,8 @@ app.use(
 	session({
 		secret: 'some secret goes here',
 		resave: true,
-		saveUninitialized: true
+		saveUninitialized: true,
+		cookie: { secure: true }
 	})
 );
 // this.express.use(session({
