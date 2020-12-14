@@ -14,15 +14,15 @@ const cors = require('cors');
 // INSTALL THESE DEPENDENCIES: passport-local, passport, bcryptjs, express-session
 // AND UN-COMMENT OUT FOLLOWING LINES:
 
-// const session       = require('express-session');
-// const passport      = require('passport');
+const session = require('express-session');
+const passport = require('passport');
 
-// require('./configs/passport');
+require('./configs/passport');
 
 // IF YOU STILL DIDN'T, GO TO 'configs/passport.js' AND UN-COMMENT OUT THE WHOLE FILE
 
 mongoose
-	.connect('mongodb+srv://jaime_ironhack:1234@cluster0.zlxjb.mongodb.net/prueba_nose?retryWrites=true&w=majority', {
+	.connect('mongodb+srv://jaimejacobo:1234@cluster0.iuw7p.mongodb.net/prueba_nose?retryWrites=true&w=majority', {
 		useNewUrlParser: true
 	})
 	.then((x) => {
@@ -57,8 +57,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 // ADD SESSION SETTINGS HERE:
+app.use(
+	session({
+		secret: 'some secret goes here',
+		resave: true,
+		saveUninitialized: true
+	})
+);
 
 // USE passport.initialize() and passport.session() HERE:
+app.use(passport.initialize());
+app.use(passport.session());
 
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
@@ -68,7 +77,8 @@ app.locals.title = 'Express - Generated with IronGenerator';
 app.use(
 	cors({
 		credentials: true,
-		origin: [ 'https://project-management-front.netlify.app' ] // <== this will be the URL of our React app (it will be running on port 3000)
+		origin: [ 'http://localhost:3000' ] // <== this will be the URL of our React app (it will be running on port 3000)
+		// origin: [ 'https://project-management-front.netlify.app' ] // <== this will be the URL of our React app (it will be running on port 3000)
 	})
 );
 
@@ -79,5 +89,8 @@ app.use('/', index);
 
 app.use('/api', require('./routes/project-routes'));
 app.use('/api', require('./routes/task-routes'));
+
+const authRoutes = require('./routes/auth-routes');
+app.use('/api', authRoutes);
 
 module.exports = app;

@@ -5,22 +5,6 @@ const router = express.Router();
 const Project = require('../models/project-model');
 const Task = require('../models/task-model'); // <== !!!
 
-// POST route => to create a new project
-router.post('/projects', (req, res, next) => {
-	const { title, description } = req.body;
-	Project.create({
-		title,
-		description,
-		tasks: []
-	})
-		.then((response) => {
-			res.json(response);
-		})
-		.catch((err) => {
-			res.json(err);
-		});
-});
-
 // GET route => to get all the projects
 router.get('/projects', (req, res, next) => {
 	Project.find()
@@ -81,6 +65,22 @@ router.delete('/projects/:id', (req, res, next) => {
 		})
 		.catch((error) => {
 			res.json(error);
+		});
+});
+
+// POST route => to create a new project
+router.post('/projects', (req, res, next) => {
+	Project.create({
+		title: req.body.title,
+		description: req.body.description,
+		tasks: [],
+		owner: req.user._id
+	})
+		.then((response) => {
+			res.json(response);
+		})
+		.catch((err) => {
+			res.json(err);
 		});
 });
 
