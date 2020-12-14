@@ -61,13 +61,7 @@ app.use(
 	session({
 		secret: 'some secret goes here',
 		resave: true,
-		saveUninitialized: true,
-		unset: 'destroy',
-		cookie: {
-			sameSite: 'Lax',
-			maxAge: 60000,
-			secure: true
-		}
+		saveUninitialized: true
 	})
 );
 // this.express.use(session({
