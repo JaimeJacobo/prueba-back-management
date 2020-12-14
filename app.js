@@ -61,9 +61,26 @@ app.use(
 	session({
 		secret: 'some secret goes here',
 		resave: true,
-		saveUninitialized: true
+		saveUninitialized: true,
+		unset: 'destroy',
+		cookie: {
+			sameSite: 'Lax',
+			maxAge: 60000,
+			secure: true
+		}
 	})
 );
+// this.express.use(session({
+// 	secret: 'whatever',
+// 	saveUninitialized: false,
+// 	resave: false,
+// 	unset: 'destroy',
+// 	cookie: {
+// 			sameSite: 'Lax',
+// 			maxAge: 60000,
+// 			secure: true
+// 	},
+// }));
 
 // USE passport.initialize() and passport.session() HERE:
 app.use(passport.initialize());
