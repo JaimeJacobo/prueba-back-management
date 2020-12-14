@@ -89,7 +89,7 @@ app.use(
 	cors({
 		credentials: true,
 		// origin: [ 'http://localhost:3000' ] // <== this will be the URL of our React app (it will be running on port 3000)
-		origin: [ 'https://project-management-front.netlify.app' ] // <== this will be the URL of our React app (it will be running on port 3000)
+		origin: [ 'https://project-management-front.herokuapp.com' ] // <== this will be the URL of our React app (it will be running on port 3000)
 	})
 );
 
